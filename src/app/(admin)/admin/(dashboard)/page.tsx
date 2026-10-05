@@ -1,6 +1,6 @@
-import React from "react";
-import { adminOrderService } from "@/modules/order/services/admin-order.service";
-import { inventoryService } from "@/modules/inventory/services/inventory.service";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import { formatCurrency } from "@/lib/utils";
 import { Card, Row, Col, Statistic, Table, Tag, Typography, Button, Space, Alert } from "antd";
 import {
@@ -10,13 +10,15 @@ import {
   WarningOutlined,
   ArrowRightOutlined,
   PlusOutlined,
+  SyncOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
 
 const { Title, Text } = Typography;
 
-export default async function AdminDashboardPage() {
-  let analytics = {
+export default function AdminDashboardPage() {
+  const [loading, setLoading] = useState(true);
+  const [analytics, setAnalytics] = useState({
     totalRevenue: 0,
     totalTaxCollected: 0,
     totalOrders: 0,
@@ -24,24 +26,40 @@ export default async function AdminDashboardPage() {
     averageOrderValue: 0,
     lowStockCount: 0,
     totalCustomers: 0,
+  });
+  const [recentOrders, setRecentOrders] = useState<any[]>([]);
+
+  const fetchDashboardData = async () => {
+    try {
+      setLoading(true);
+      const [analyticsRes, ordersRes] = await Promise.all([
+        fetch("/api/v1/admin/analytics/overview"),
+        fetch("/api/v1/admin/orders?page=1&limit=5"),
+      ]);
+
+      if (analyticsRes.ok) {
+        const analyticsJson = await analyticsRes.json();
+        if (analyticsJson.success && analyticsJson.data) {
+          setAnalytics(analyticsJson.data);
+        }
+      }
+
+      if (ordersRes.ok) {
+        const ordersJson = await ordersRes.json();
+        if (ordersJson.success && ordersJson.data) {
+          setRecentOrders(ordersJson.data);
+        }
+      }
+    } catch (err) {
+      console.error("Could not load admin dashboard analytics", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  let recentOrders: any[] = [];
-  let lowStockItems: any[] = [];
-
-  try {
-    const [analyticsData, ordersData, inventoryData] = await Promise.all([
-      adminOrderService.getDashboardAnalytics(),
-      adminOrderService.listOrders({ page: 1, limit: 5 }),
-      inventoryService.listInventory({ page: 1, limit: 5, lowStockOnly: true }),
-    ]);
-
-    analytics = analyticsData;
-    recentOrders = ordersData.orders;
-    lowStockItems = inventoryData.items;
-  } catch (err) {
-    console.error("Could not load admin dashboard analytics", err);
-  }
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
 
   const orderColumns = [
     {
@@ -54,7 +72,9 @@ export default async function AdminDashboardPage() {
       title: "Customer",
       key: "customer",
       render: (_: any, record: any) => (
-        <span>{record.user?.firstName || "Guest"} ({record.user?.email || "N/A"})</span>
+        <span>
+          {record.user?.firstName || "Guest"} ({record.user?.email || "N/A"})
+        </span>
       ),
     },
     {
@@ -93,6 +113,9 @@ export default async function AdminDashboardPage() {
         </div>
 
         <Space>
+          <Button icon={<SyncOutlined spin={loading} />} onClick={fetchDashboardData}>
+            Refresh
+          </Button>
           <Link href="/admin/products">
             <Button type="primary" icon={<PlusOutlined />}>
               Create Product & Matrix
@@ -183,6 +206,7 @@ export default async function AdminDashboardPage() {
           columns={orderColumns}
           rowKey="id"
           pagination={false}
+          loading={loading}
         />
       </Card>
     </div>
