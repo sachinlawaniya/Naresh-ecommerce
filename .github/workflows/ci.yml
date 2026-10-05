@@ -1,0 +1,37 @@
+name: Enterprise Commerce CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  validate-and-test:
+    name: Code Quality & Type Integrity
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Install Project Dependencies
+        run: npm ci
+
+      - name: Validate Prisma Database Schema
+        run: npx prisma validate
+
+      - name: Generate Prisma Client
+        run: npx prisma generate
+
+      - name: Verify Strict TypeScript Compilation
+        run: npx tsc --noEmit
+
+      - name: Run ESLint Checks
+        run: npm run lint

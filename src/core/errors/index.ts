@@ -1,0 +1,56 @@
+export class AppError extends Error {
+  public readonly statusCode: number;
+  public readonly code: string;
+  public readonly details?: Record<string, string[]>;
+
+  constructor(message: string, statusCode = 500, code = "INTERNAL_SERVER_ERROR", details?: Record<string, string[]>) {
+    super(message);
+    this.name = this.constructor.name;
+    this.statusCode = statusCode;
+    this.code = code;
+    this.details = details;
+    Error.captureStackTrace(this, this.constructor);
+  }
+}
+
+export class NotFoundError extends AppError {
+  constructor(message = "Requested resource was not found") {
+    super(message, 404, "NOT_FOUND");
+  }
+}
+
+export class UnauthorizedError extends AppError {
+  constructor(message = "Authentication is required to access this resource") {
+    super(message, 401, "UNAUTHORIZED");
+  }
+}
+
+export class ForbiddenError extends AppError {
+  constructor(message = "You do not have permission to perform this action") {
+    super(message, 403, "FORBIDDEN");
+  }
+}
+
+export class ValidationError extends AppError {
+  constructor(message = "Validation failed for provided input", details?: Record<string, string[]>) {
+    super(message, 422, "VALIDATION_ERROR", details);
+  }
+}
+
+export class ConflictError extends AppError {
+  constructor(message = "A resource conflict occurred") {
+    super(message, 409, "CONFLICT");
+  }
+}
+
+export class InventoryLockError extends AppError {
+  constructor(message = "Requested SKU quantity is out of stock or reserved") {
+    super(message, 409, "INVENTORY_UNAVAILABLE");
+  }
+}
+
+export class PaymentProcessingError extends AppError {
+  constructor(message = "Payment authorization or capture failed") {
+    super(message, 400, "PAYMENT_FAILED");
+  }
+}
