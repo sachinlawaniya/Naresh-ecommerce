@@ -144,13 +144,13 @@ export default function WishlistPage() {
           </Link>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6">
           {wishlistItems.map((item) => (
             <div
               key={item.id}
-              className="rounded-2xl bg-white border border-[#eae6df] overflow-hidden shadow-sm flex flex-col justify-between"
+              className="card-3d rounded-2xl bg-white border border-[#eae6df] hover:border-[#121212]/20 overflow-hidden shadow-sm hover:shadow-xl flex flex-col justify-between"
             >
-              <div className="relative aspect-[3/4] bg-[#f4f2ee]">
+              <div className="relative aspect-[3/4] bg-[#f4f2ee] overflow-hidden group">
                 <img
                   src={item.image}
                   alt={item.title}
@@ -158,27 +158,27 @@ export default function WishlistPage() {
                     (e.currentTarget as HTMLImageElement).src =
                       "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&q=80";
                   }}
-                  className="w-full h-full object-cover object-center"
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 />
                 <button
                   onClick={() => handleRemove(item.id)}
-                  className="absolute top-3 right-3 p-2 rounded-full bg-white/90 text-[#444444] hover:text-rose-600 shadow-sm transition"
+                  className="absolute top-2 right-2 sm:top-3 sm:right-3 p-1.5 sm:p-2 rounded-full bg-white/90 text-[#444444] hover:text-rose-600 shadow-sm transition active:scale-95"
                   title="Remove"
                 >
-                  <Trash2 className="w-4 h-4" />
+                  <Trash2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </button>
-                <span className="absolute bottom-3 left-3 px-2.5 py-1 rounded-full bg-white/95 text-[#121212] text-[10px] font-semibold border border-[#eae6df]">
+                <span className="absolute bottom-2 left-2 sm:bottom-3 sm:left-3 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-white/95 text-[#121212] text-[9px] sm:text-[10px] font-semibold border border-[#eae6df]">
                   {item.category}
                 </span>
               </div>
 
-              <div className="p-5 space-y-3 flex-1 flex flex-col justify-between bg-white">
+              <div className="p-3 sm:p-5 space-y-2 sm:space-y-3 flex-1 flex flex-col justify-between bg-white">
                 <div>
-                  <h3 className="font-semibold text-sm text-[#121212] tracking-tight line-clamp-1">
+                  <h3 className="font-semibold text-xs sm:text-sm text-[#121212] tracking-tight line-clamp-1">
                     <Link href={`/product/${item.slug}`}>{item.title}</Link>
                   </h3>
-                  <p className="text-xs text-[#78716c] mt-1">
-                    {item.colorName} • Size {item.size} • SKU: {item.sku}
+                  <p className="text-[10px] sm:text-xs text-[#78716c] mt-0.5">
+                    {item.colorName} • Size {item.size}
                   </p>
                 </div>
 

@@ -60,12 +60,12 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10 bg-[#fafaf8] text-[#121212]">
       
       {/* 1. Header Banner */}
-      <div className="relative rounded-3xl overflow-hidden bg-[#ebe6dd] border border-[#dfd8cb] p-8 sm:p-12 shadow-sm">
-        <div className="relative z-10 max-w-3xl space-y-3">
-          <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#78716c] font-sans">
+      <div className="relative rounded-3xl overflow-hidden bg-[#ebe6dd] border border-[#dfd8cb] p-6 sm:p-12 shadow-sm">
+        <div className="relative z-10 max-w-3xl space-y-2.5 sm:space-y-3">
+          <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em] text-[#78716c] font-sans">
             COLLECTIONS '26 —
           </span>
-          <h1 className="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-[#121212] capitalize">
+          <h1 className="font-serif text-2xl sm:text-5xl font-bold tracking-tight text-[#121212] capitalize">
             {activeCatTitle}
           </h1>
           <p className="text-[#57534e] text-xs sm:text-sm max-w-2xl leading-relaxed font-light">
@@ -75,11 +75,11 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
       </div>
 
       {/* 2. Category & Sort Filter Pills Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#eae6df] pb-5">
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0 scrollbar-none">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 border-b border-[#eae6df] pb-4 sm:pb-5">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 no-scrollbar">
           <Link
             href="/shop"
-            className={`px-5 py-2 rounded-full text-xs font-semibold tracking-wide transition flex-shrink-0 ${
+            className={`px-4 sm:px-5 py-2 rounded-full text-xs font-semibold tracking-wide transition flex-shrink-0 ${
               !params.categorySlug && !params.collectionSlug
                 ? "bg-[#121212] text-white shadow-sm"
                 : "bg-[#f4f2ee] text-[#444444] hover:bg-[#eae6df] border border-[#e5e0d8]"
@@ -91,7 +91,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
             <Link
               key={cat.id}
               href={`/shop?categorySlug=${cat.slug}`}
-              className={`px-5 py-2 rounded-full text-xs font-semibold tracking-wide transition flex-shrink-0 ${
+              className={`px-4 sm:px-5 py-2 rounded-full text-xs font-semibold tracking-wide transition flex-shrink-0 ${
                 params.categorySlug === cat.slug
                   ? "bg-[#121212] text-white shadow-sm"
                   : "bg-[#f4f2ee] text-[#444444] hover:bg-[#eae6df] border border-[#e5e0d8]"
@@ -103,11 +103,11 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
         </div>
 
         {/* Sort Links */}
-        <div className="flex items-center gap-2 text-xs text-[#666666] self-end sm:self-auto flex-shrink-0">
-          <span className="text-[11px] uppercase tracking-wider font-semibold">Sort:</span>
+        <div className="flex items-center gap-1.5 sm:gap-2 text-xs text-[#666666] self-start sm:self-auto flex-shrink-0 overflow-x-auto no-scrollbar">
+          <span className="text-[10px] sm:text-[11px] uppercase tracking-wider font-semibold">Sort:</span>
           <Link
             href={`/shop?${new URLSearchParams({ ...params, sort: "newest" }).toString()}`}
-            className={`px-3 py-1.5 rounded-full font-medium transition ${
+            className={`px-2.5 sm:px-3 py-1.5 rounded-full font-medium transition ${
               !params.sort || params.sort === "newest" ? "bg-[#121212] text-white" : "hover:text-black"
             }`}
           >
@@ -115,7 +115,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
           </Link>
           <Link
             href={`/shop?${new URLSearchParams({ ...params, sort: "price_asc" }).toString()}`}
-            className={`px-3 py-1.5 rounded-full font-medium transition ${
+            className={`px-2.5 sm:px-3 py-1.5 rounded-full font-medium transition ${
               params.sort === "price_asc" ? "bg-[#121212] text-white" : "hover:text-black"
             }`}
           >
@@ -123,7 +123,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
           </Link>
           <Link
             href={`/shop?${new URLSearchParams({ ...params, sort: "price_desc" }).toString()}`}
-            className={`px-3 py-1.5 rounded-full font-medium transition ${
+            className={`px-2.5 sm:px-3 py-1.5 rounded-full font-medium transition ${
               params.sort === "price_desc" ? "bg-[#121212] text-white" : "hover:text-black"
             }`}
           >
@@ -135,7 +135,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
       {/* 3. Main Product Grid */}
       {products.length > 0 ? (
         <div className="space-y-16">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

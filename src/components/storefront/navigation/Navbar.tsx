@@ -55,26 +55,26 @@ export function Navbar() {
 
       {/* 2. MAIN HEADER (CLEAN EDITORIAL WHITE) */}
       <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-[#eae6df] transition-all">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4 sm:gap-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-3 sm:gap-8">
           
           {/* Mobile Menu Button */}
           <div className="flex items-center lg:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-[#121212] hover:text-black transition"
+              className="p-1.5 sm:p-2 text-[#121212] hover:text-black transition -ml-1.5 sm:ml-0"
               aria-label="Toggle Menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
             </button>
           </div>
 
           {/* Left: Brand Identity */}
           <div className="flex items-center flex-shrink-0">
             <Link href="/" className="flex flex-col">
-              <span className="font-serif text-2xl sm:text-3xl font-extrabold tracking-tight text-[#121212] uppercase leading-none">
+              <span className="font-serif text-xl sm:text-3xl font-extrabold tracking-tight text-[#121212] uppercase leading-none">
                 LUXE
               </span>
-              <span className="text-[8px] font-sans tracking-[0.2em] text-[#888888] font-bold uppercase mt-0.5">
+              <span className="text-[7px] sm:text-[8px] font-sans tracking-[0.2em] text-[#888888] font-bold uppercase mt-0.5">
                 CLOTHING STORE
               </span>
             </Link>

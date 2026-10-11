@@ -47,7 +47,7 @@ export function CartDrawer() {
         className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300"
       />
 
-      <div className="fixed inset-y-0 right-0 max-w-full flex pl-6 sm:pl-10">
+      <div className="fixed inset-y-0 right-0 max-w-full flex pl-0 sm:pl-10">
         <div className="w-screen max-w-md bg-white shadow-2xl flex flex-col border-l border-[#eae6df] text-[#121212] animate-in slide-in-from-right duration-300">
           
           {/* Header */}

@@ -101,7 +101,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
   return (
     <>
-      <div className="group relative flex flex-col rounded-2xl bg-white border border-[#eae6df] hover:border-[#d4ccbe] transition-all duration-300 overflow-hidden shadow-sm hover:shadow-md">
+      <div className="card-3d group relative flex flex-col h-full rounded-2xl bg-white border border-[#eae6df] hover:border-[#121212]/20 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-xl">
         
         {/* Media Container */}
         <div className="relative aspect-[3/4] w-full bg-[#f4f2ee] overflow-hidden">
@@ -113,18 +113,18 @@ export function ProductCard({ product }: ProductCardProps) {
                 (e.currentTarget as HTMLImageElement).src =
                   "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&q=80";
               }}
-              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
+              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
             />
           </Link>
 
           {/* Top Wishlist Icon */}
           <button
             onClick={handleWishlistToggle}
-            className="absolute top-3 right-3 p-2 rounded-full bg-white/90 hover:bg-white text-[#444444] hover:text-black shadow-sm transition"
+            className="absolute top-2 right-2 sm:top-3 sm:right-3 p-1.5 sm:p-2 rounded-full bg-white/90 hover:bg-white text-[#444444] hover:text-black shadow-sm transition-transform active:scale-90 hover:scale-110 z-10"
             aria-label="Wishlist"
           >
             <Heart
-              className={`w-4 h-4 ${
+              className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${
                 isWishlisted ? "fill-rose-500 text-rose-500" : "stroke-[1.75]"
               }`}
             />
@@ -132,42 +132,54 @@ export function ProductCard({ product }: ProductCardProps) {
 
           {/* Discount badge if on sale */}
           {discountPercent && (
-            <div className="absolute top-3 left-3 px-2 py-0.5 rounded-md bg-[#fee2e2] text-[#dc2626] text-[10px] font-bold uppercase tracking-wider">
+            <div className="absolute top-2 left-2 sm:top-3 sm:left-3 px-1.5 sm:px-2 py-0.5 rounded sm:rounded-md bg-[#fee2e2] text-[#dc2626] text-[9px] sm:text-[10px] font-bold uppercase tracking-wider shadow-sm z-10">
               {discountPercent}% OFF
             </div>
           )}
+
+          {/* Quick View Button on Desktop Hover */}
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setIsQuickViewOpen(true);
+            }}
+            className="hidden sm:flex absolute bottom-3 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/95 backdrop-blur-md text-[#121212] text-[11px] font-bold shadow-lg border border-black/5 hover:bg-black hover:text-white z-10"
+          >
+            Quick View
+          </button>
         </div>
 
         {/* Product Details */}
-        <div className="p-4 flex-1 flex flex-col justify-between space-y-3 bg-white">
+        <div className="p-2.5 sm:p-4 flex-1 flex flex-col justify-between space-y-2 sm:space-y-3 bg-white">
           
-          <div>
+          <div className="space-y-1">
             {/* Title */}
-            <h3 className="font-semibold text-sm text-[#121212] tracking-tight line-clamp-1 group-hover:text-[#444444] transition">
+            <h3 className="font-semibold text-xs sm:text-sm text-[#121212] tracking-tight line-clamp-1 group-hover:text-[#555555] transition">
               <Link href={`/product/${product.slug}`}>{product.title}</Link>
             </h3>
 
             {/* Ratings */}
-            <div className="flex items-center gap-1 mt-1 text-xs text-[#666666]">
+            <div className="flex items-center gap-1 text-[10px] sm:text-xs text-[#666666]">
               <div className="flex items-center text-amber-500">
-                <Star className="w-3.5 h-3.5 fill-current" />
+                <Star className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-current" />
               </div>
-              <span className="font-bold text-[#121212] text-[11px]">4.8</span>
-              <span className="text-[11px] text-[#888888]">(120)</span>
+              <span className="font-bold text-[#121212] text-[10px] sm:text-[11px]">4.8</span>
+              <span className="text-[10px] sm:text-[11px] text-[#888888]">(120)</span>
             </div>
 
             {/* Price Row */}
-            <div className="flex items-baseline gap-2 mt-2">
-              <span className="text-base font-bold text-[#121212]">
+            <div className="flex items-baseline flex-wrap gap-1 sm:gap-2 pt-0.5">
+              <span className="text-xs sm:text-base font-bold text-[#121212]">
                 {formatCurrency(minSalePrice || minPrice)}
               </span>
               {minSalePrice && (
-                <span className="text-xs text-[#888888] line-through">
+                <span className="text-[10px] sm:text-xs text-[#888888] line-through">
                   {formatCurrency(minPrice)}
                 </span>
               )}
               {discountPercent && (
-                <span className="text-[11px] font-bold text-[#dc2626]">
+                <span className="text-[9px] sm:text-[11px] font-bold text-[#dc2626]">
                   {discountPercent}% OFF
                 </span>
               )}
@@ -176,12 +188,12 @@ export function ProductCard({ product }: ProductCardProps) {
 
           {/* Color Swatches */}
           {distinctColors.length > 0 && (
-            <div className="flex items-center gap-1.5 pt-1">
+            <div className="flex items-center gap-1 sm:gap-1.5 pt-0.5">
               {distinctColors.slice(0, 4).map((color) => (
                 <button
                   key={color.hex}
                   onClick={() => setActiveColor(color)}
-                  className={`w-3.5 h-3.5 rounded-full border transition ${
+                  className={`w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full border transition ${
                     activeColor?.hex === color.hex
                       ? "ring-2 ring-black border-white scale-110"
                       : "border-[#d4ccbe] opacity-80 hover:opacity-100"
@@ -193,8 +205,8 @@ export function ProductCard({ product }: ProductCardProps) {
             </div>
           )}
 
-          {/* Size Pills */}
-          <div className="flex items-center gap-1 pt-1">
+          {/* Size Pills (visible on tablet/desktop, clean on mobile) */}
+          <div className="hidden sm:flex items-center gap-1 pt-0.5 overflow-x-auto no-scrollbar">
             {["S", "M", "L", "XL", "XXL"].map((sz) => (
               <button
                 key={sz}
@@ -202,7 +214,7 @@ export function ProductCard({ product }: ProductCardProps) {
                   e.preventDefault();
                   setActiveSize(sz);
                 }}
-                className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase transition ${
+                className={`px-1.5 sm:px-2 py-0.5 rounded text-[9px] sm:text-[10px] font-bold uppercase transition flex-shrink-0 ${
                   activeSize === sz
                     ? "bg-[#121212] text-white"
                     : "bg-[#f4f2ee] text-[#555555] hover:bg-[#eae6df]"
@@ -216,9 +228,10 @@ export function ProductCard({ product }: ProductCardProps) {
           {/* Add to Cart Black Button */}
           <button
             onClick={handleAddToCart}
-            className="w-full py-2.5 px-4 rounded-xl bg-[#121212] hover:bg-black text-white text-xs font-semibold tracking-wide transition shadow-sm"
+            className="w-full py-2 sm:py-2.5 px-2 sm:px-4 rounded-xl bg-[#121212] hover:bg-black active:scale-[0.98] text-white text-[11px] sm:text-xs font-semibold tracking-wide transition shadow-sm hover:shadow-md flex items-center justify-center gap-1.5 mt-auto"
           >
-            Add to Cart
+            <ShoppingBag className="w-3.5 h-3.5 flex-shrink-0" />
+            <span className="truncate">Add to Cart</span>
           </button>
         </div>
       </div>

@@ -47,7 +47,7 @@ export function Footer() {
               <span>You're in! Use code <strong>WELCOME10</strong> on your order.</span>
             </div>
           ) : (
-            <form onSubmit={handleSubscribe} className="flex items-center w-full max-w-md gap-2">
+            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row items-stretch sm:items-center w-full max-w-md gap-2">
               <input
                 type="email"
                 required
@@ -58,7 +58,7 @@ export function Footer() {
               />
               <button
                 type="submit"
-                className="px-6 py-3 rounded-full bg-[#121212] hover:bg-black text-white text-xs font-semibold transition"
+                className="px-6 py-3 rounded-full bg-[#121212] hover:bg-black text-white text-xs font-semibold transition flex-shrink-0"
               >
                 Subscribe
               </button>
@@ -68,11 +68,11 @@ export function Footer() {
       </div>
 
       {/* 2. MAIN FOOTER NAVIGATION */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 sm:gap-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-12">
           
           {/* Col 1: Brand Info */}
-          <div className="space-y-4 lg:col-span-1">
+          <div className="space-y-4 col-span-2 md:col-span-1">
             <Link href="/" className="flex flex-col">
               <span className="font-serif text-2xl font-black tracking-tight text-[#121212] uppercase leading-none">
                 LUXE

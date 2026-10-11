@@ -51,15 +51,17 @@ h1, h2, h3, .font-serif-heading {
 }
 
 /* Clean Luxury Glass & Cards */
+/* Clean Luxury Glass & Cards */
 .luxe-light-card {
   background: #ffffff;
   border: 1px solid #ede8e0;
-  transition: all 0.3s ease;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .luxe-light-card:hover {
   border-color: #d8d0c2;
-  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.08), 0 0 1px 1px rgba(0, 0, 0, 0.02);
+  transform: translateY(-3px);
 }
 
 .luxe-pill-btn {
@@ -70,7 +72,148 @@ h1, h2, h3, .font-serif-heading {
   font-weight: 600;
   font-size: 0.8125rem;
   letter-spacing: 0.02em;
-  transition: all 0.25s ease;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.luxe-pill-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px -4px rgba(0, 0, 0, 0.15);
+}
+.luxe-pill-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* 3D Transform & Depth Effects */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* 3D Card Hover Physics */
+.card-3d {
+  transform: perspective(1000px) translateZ(0);
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease;
+  will-change: transform, box-shadow;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card-3d:hover {
+    transform: perspective(1000px) translateY(-6px) translateZ(12px) rotateX(1.5deg);
+    box-shadow: 0 20px 35px -12px rgba(18, 18, 18, 0.12), 0 6px 12px -4px rgba(18, 18, 18, 0.05);
+  }
+}
+
+/* 3D Floating Animations */
+@keyframes float3dSlow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg) translateZ(0);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1.2deg) translateZ(10px);
+  }
+}
+
+@keyframes float3dReverse {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg) translateZ(0);
+  }
+  50% {
+    transform: translateY(8px) rotate(-1.2deg) translateZ(8px);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.75;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes shineSweep {
+  0% {
+    transform: translateX(-150%) skewX(-20deg);
+  }
+  50%, 100% {
+    transform: translateX(250%) skewX(-20deg);
+  }
+}
+
+@keyframes subtleTilt {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(0.8deg);
+  }
+  75% {
+    transform: rotate(-0.8deg);
+  }
+}
+
+.animate-float-3d {
+  animation: float3dSlow 5s ease-in-out infinite;
+}
+
+.animate-float-3d-slow {
+  animation: float3dSlow 7s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+  animation: float3dReverse 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+.animate-subtle-tilt {
+  animation: subtleTilt 8s ease-in-out infinite;
+}
+
+.shine-sweep {
+  position: relative;
+  overflow: hidden;
+}
+.shine-sweep::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shineSweep 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Glassmorphism Depth Layers */
+.glass-depth-1 {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.glass-depth-dark {
+  background: rgba(18, 18, 18, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Infinite Marquee */
@@ -88,3 +231,4 @@ h1, h2, h3, .font-serif-heading {
 .animate-marquee:hover {
   animation-play-state: paused;
 }
+
